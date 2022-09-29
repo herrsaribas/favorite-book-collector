@@ -1,0 +1,12 @@
+img {
+  width: 300px;
+  height: auto;
+}
+
+.header {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.headerContent {
+  font-size: 2rem;
+}
