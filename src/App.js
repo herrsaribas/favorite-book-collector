@@ -11,7 +11,7 @@ import Button from "./UI/Button";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [showCard, setShowCard] = useState(false);
-  const [bookList, setBookList] = useState("");
+  const [bookList, setBookList] = useState([]);
 
   const addNewBookHandler = () => {
     setShowForm(true);
