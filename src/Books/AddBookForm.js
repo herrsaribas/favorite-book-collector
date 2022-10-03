@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classes from "./AddBookForm.module.css";
 import Header from "../UI/Header";
 import ErrorDialog from "../UI/ErrorDialog";
+import Card from "../UI/Card";
+import Button from "../UI/Button";
 
 const AddBookForm = (props) => {
   const [bookInfo, setBookInfo] = useState({ title: "", author: "", id: "" });
@@ -21,7 +23,10 @@ const AddBookForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (bookInfo.title.length === 0 || bookInfo.author.length === 0) {
+    if (
+      bookInfo.title.trim().length === 0 ||
+      bookInfo.author.trim().length === 0
+    ) {
       errorDialogHandler(true);
       return;
     }
@@ -38,32 +43,32 @@ const AddBookForm = (props) => {
   };
 
   return (
-    <div className={classes.container}>
+    <Card className={classes.baseBackground}>
       <div>
         <Header headerContent="Hello" />
         <form className={classes.form} onSubmit={submitHandler}>
-          <div>
+          <div className={classes.input}>
             <input
+              className={classes.form__input}
               id="book-title"
               label="Book Title"
-              placeholder="Eloquent JavaScript"
+              placeholder="Book Title"
               onChange={titleChangeHandler}
+              value={bookInfo.title}
             />
-          </div>
-          <div>
             <input
+              className={classes.form__input}
               id="author"
               label="Author"
-              placeholder="Marijn Haverbeke"
+              placeholder="Author"
               onChange={authorChangeHandler}
+              value={bookInfo.author}
             />
           </div>
           <div>
-            <div>
-              <button onClick={clickCloseHandler}>Close</button>
-            </div>
-            <div>
-              <button>Add new Book</button>
+            <div className={classes.buttonModule}>
+              <Button onClick={clickCloseHandler}>Close</Button>
+              <Button>Add new Book</Button>
             </div>
           </div>
         </form>
@@ -71,7 +76,7 @@ const AddBookForm = (props) => {
       {openErrorDialog && (
         <ErrorDialog open={openErrorDialog} dialogState={errorDialogHandler} />
       )}
-    </div>
+    </Card>
   );
 };
 
