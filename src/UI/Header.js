@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Header.module.css";
-import bookStore from "../assets/book-store.jpg";
+import bookStore from "../assets/book-store.png";
 
 const Header = (props) => {
   return (

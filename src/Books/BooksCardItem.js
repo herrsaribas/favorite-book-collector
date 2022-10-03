@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../UI/Button";
 import classes from "./BookCardItem.module.css";
 import Card from "../UI/Card";
+import BookItem from "../assets/book-item.png";
 
 const BookCardItem = (props) => {
   const clickHandler = () => {
@@ -10,7 +11,9 @@ const BookCardItem = (props) => {
 
   return (
     <Card className={classes.bookItem}>
-      <div></div>
+      <div>
+        <img src={BookItem} />
+      </div>
       <div>
         <h2>{props.title}</h2>
         <p>{props.author}</p>

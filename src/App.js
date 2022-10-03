@@ -4,7 +4,7 @@ import Header from "./UI/Header";
 import Divider from "./UI/Divider";
 import BooksCard from "./Books/BooksCard";
 import AddBookForm from "./Books/AddBookForm";
-import BookStore from "./assets/book-store.jpg";
+import BookStore from "./assets/book-store.png";
 import Card from "./UI/Card";
 import Button from "./UI/Button";
 
@@ -21,7 +21,7 @@ const App = () => {
 
   const hideFormHandler = () => {
     setShowForm(false);
-    setShowCard(false);
+    //setShowCard(false);
   };
 
   const newBookHandler = (newBook) => {
