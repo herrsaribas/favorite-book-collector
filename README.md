@@ -1,71 +1,72 @@
-# Getting Started with Create React App
+# What is this project about?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is about to practice React basic concepts. I will be building a simple application to build a list of favourite books. Conditional rendering, form submission, states, lifting states up, updating and mapping arrays, and triggering modals
+ 
+![Screenshot from 2022-10-04 10-28-17](https://user-images.githubusercontent.com/77645494/193772147-81655d06-2040-4489-bab3-bcb8bb48c481.png)
 
-## Available Scripts
+## Project structure
 
-In the project directory, you can run:
+I have multiple components handling different tasks. Some of them are used to render UI code, others are in charge of rendering the form, and many of them are shuffling data from one component to another.
 
-### `npm start`
+## Conditional rendering
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+I wanted to render the form only when the user clicks on the “Add new book” button. I chose to include a listener on the button, onClick={addNewBookHandler}, which would handle the event by calling a set state function, setShowAddBookForm(true), which in turn will update a Boolean variable, showAddBookForm that will be used to conditionally render the AddBookForm component.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![image](https://user-images.githubusercontent.com/77645494/193774539-7c9ebb49-cb1e-4b07-abca-476faa3b595a.png)
 
-### `npm test`
+I used this same technique to render headers and buttons as well, based on certain conditions.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Forms and input fields
+In order to: 
++ Gather the data from input fields
++ Trigger an action on form submit.
 
-### `npm run build`
+To get the data from the input fields I've used the onChange event listener because it could be used on most of the form fields. This event will be triggered every time the input field changes, so it will cause the state to update every time the user presses a key to write something in the form input. We can keep track of the input data by calling a set state function each time the onChange handler is called.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![image](https://user-images.githubusercontent.com/77645494/193780233-73c417a9-e711-4c49-97b5-f0d42bea88c9.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![image](https://user-images.githubusercontent.com/77645494/193775775-99b170cc-fbee-479b-86f2-49642725579f.png)
 
-### `npm run eject`
+Once users finish inputting text, they will click on the submit button and, as the form has an onSubmit event listener, it will trigger the onSubmit handler, submitHandler in our case. This handler will prevent the default behaviour of the form (a page reload), check that the input is not empty, take the data of the input fields (that is actually stored in the state by now) and call a “lift state up” function and clear the input fields.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![image](https://user-images.githubusercontent.com/77645494/193776327-cb62bdca-ef48-45d6-9fd5-588789e89f9a.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Lifting states up
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+In this project, we are getting data in a component and using it in a different component. Usually, these components are far away from each other, and the only way to link the data between them is by using a common nearest ancestor.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+We need to declare a handler function, newBookHandler, in the common ancestor component, App, and pass it as a prop,onNewBook, to the form component, AddBookForm. It is important to note that we are passing the function, not the function call, so we shouldn’t include parenthesis after the function name when we write it in the prop.
 
-## Learn More
+![image](https://user-images.githubusercontent.com/77645494/193777182-c255a4af-f9a1-4340-bd8e-0c8aea762e91.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The form component, AddBookForm, will call the function that was passed in its props and uses the data from the input fields as the argument. In this way, the arguments gathered in the form component will be available in the ancestor, the App component. This is called “lifting the state up”.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![image](https://user-images.githubusercontent.com/77645494/193777566-c8148396-d1df-465d-bb51-7ad13fc6d818.png)
 
-### Code Splitting
+Lifting states up is used in many components in this project, each time data needs to be gathered from one component and used in another one. Data can be something like text entered on an input filed, or a click on a button, as is the case when we want to delete a book card from the card grid. The tricky part is to realise which component needs to deliver the data, and which one needs to act on it, but I think that with time and experience this will become easier.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Updating and mapping arrays
 
-### Analyzing the Bundle Size
+In this case, we want to display a series of book cards containing the title and author of each book, so we are going to end up having an array containing a collection of objects, and inside those objects, titles and authors will be stored.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Each time a book is added (or deleted), our array will need to be updated. So, in our example, the App component will receive a new book data from the AddBookForm component and will use that data to update the values of an array, bookList. As this is a change in the state of our application, we use a set state function, setBookList , to update the array.
 
-### Making a Progressive Web App
+![image](https://user-images.githubusercontent.com/77645494/193778557-0a96da6e-8524-4f77-9920-d190190b7555.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+It is very important to note that when we want to update an array, object, counter, or any other variable based on its previous state, we shouldn’t call the set state function just with the new data but use a previous state function as an argument. This way, the set state function will update the variable only when the previous state has finished updating it.
 
-### Advanced Configuration
+![image](https://user-images.githubusercontent.com/77645494/193778792-d1c8bc56-6ba6-43ae-b776-2d4a6d254771.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Once our array is updated, we pass it as a prop to the component that will render it, in this case, BooksGrid. That component will call the component in charge of actually rendering the data on each of the elements of the array. For doing this we use the map() method.
 
-### Deployment
+![image](https://user-images.githubusercontent.com/77645494/193779521-4ab1c493-5adf-4de9-ad83-94b22856eaf3.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+## Triggering a modal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# favorite-book-collector
+Another common task on web apps is triggering modals, or error messages, when the user performs an action. In our case, we want to give the user a message indicating that the form shouldn’t be submitted when the input fields are empty.
+
+Our Error component is the one that will render the modal if the user actions meet a certain condition. As this is a different component from the one that is evaluating the condition, we need to use the “lifting the state up” method once more.
+
+![image](https://user-images.githubusercontent.com/77645494/193780005-97adaee7-6a02-453a-8ac2-2bc5a5d65633.png)
